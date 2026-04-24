@@ -3,13 +3,16 @@
     "module": "src/index.ts",
     "type": "module",
     "private": true,
-    "scripts": {
-        "dev": "bun run src/index.ts"
-    },
     "devDependencies": {
         "@types/bun": "^1.3.13"
     },
     "peerDependencies": {
         "typescript": "^5"
+    },
+    "scripts": {
+        "dev": "bun run src/index.ts"
+    },
+    "dependencies": {
+        "puppeteer": "^24.42.0"
     }
 }

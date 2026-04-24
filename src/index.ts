@@ -1,4 +1,7 @@
-import useConfig from './use-config';
+import useConfig from './features/use-config';
+import useScreenshot from './features/use-screenshot';
 
 const config = useConfig();
-console.log(config);
+const screenshot = await useScreenshot(config);
+
+await screenshot.close();
