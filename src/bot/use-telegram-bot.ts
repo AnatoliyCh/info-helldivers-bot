@@ -6,8 +6,8 @@ import addTips from './commands/add-tips';
 export default (config: Config) => {
     const bot = new Bot(config.botToken).onStart(() => console.log('bot started'));
 
-    addMainOrder(config, bot);
     addTips(bot);
+    addMainOrder(config, bot);
 
     bot.start();
     return bot;

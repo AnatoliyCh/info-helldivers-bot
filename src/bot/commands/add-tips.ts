@@ -1,10 +1,10 @@
 import { type Bot } from 'gramio';
-import useManualTips from '../../features/manual-tips/use-manual-tips';
+import useRandomTips from '../../features/random-tips/use-random-tips';
 
 export default async (bot: Bot) => {
-    const manualTips = useManualTips();
+    const tips = useRandomTips();
     bot.onStart(() => console.log('add command "tips"')).command('tips', async (ctx) => {
-        await ctx.send(manualTips.getRandomTipsAsQuote());
+        await ctx.send(tips.getTipsAsQuote());
         ctx.delete();
     });
 };
