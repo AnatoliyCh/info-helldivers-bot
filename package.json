@@ -13,6 +13,7 @@
         "dev": "bun run src/index.ts"
     },
     "dependencies": {
+        "gramio": "^0.9.0",
         "puppeteer": "^24.42.0"
     }
 }
