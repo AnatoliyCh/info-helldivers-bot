@@ -1,10 +1,10 @@
 import { Bot } from 'gramio';
-import type { Config } from '../features/use-config';
+import type { Config } from '../types';
 import addMainOrder from './commands/add-main-order';
 import addTips from './commands/add-tips';
 
 export default async (config: Config) => {
-    const bot = new Bot(config.botToken).onStart(() => console.log('bot started'));
+    const bot = new Bot(config.botToken).onStart(() => console.log('bot started')).decorate({});
 
     await addTips(bot);
     await addMainOrder(bot, config);

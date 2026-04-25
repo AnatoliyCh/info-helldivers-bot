@@ -1,9 +1,4 @@
-export type Config = {
-    siteUrl: string;
-    requestCooldown: number;
-    selector: string;
-    botToken: string;
-};
+import type { Config } from '../types';
 
 export default (): Config => {
     const { SITE_URL, REQUEST_COOLDOWN, SELECTOR, BOT_TOKEN } = process.env;

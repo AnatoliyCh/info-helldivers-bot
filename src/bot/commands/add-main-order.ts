@@ -1,7 +1,7 @@
 import { MediaUpload, type Bot } from 'gramio';
 import useRandomTips from '../../features/random-tips/use-random-tips';
-import type { Config } from '../../features/use-config';
 import useScreenshot from '../../features/use-screenshot';
+import type { Config } from '../../types';
 
 export default async (bot: Bot, config: Config) => {
     const screenshot = await useScreenshot(config);

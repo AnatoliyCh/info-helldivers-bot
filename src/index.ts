@@ -5,8 +5,6 @@ const signals = ['SIGINT', 'SIGTERM'] as const;
 
 const config = useConfig();
 const bot = await useTelegramBot(config);
-bot.start();
-
 for (const signal of signals) {
     process.on(signal, async () => {
         console.log(`${signal} => exiting...`);
@@ -14,3 +12,5 @@ for (const signal of signals) {
         process.exit(0);
     });
 }
+
+await bot.start();
