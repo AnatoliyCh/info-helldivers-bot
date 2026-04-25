@@ -10,7 +10,8 @@
         "typescript": "^5"
     },
     "scripts": {
-        "dev": "bun run src/index.ts"
+        "dev": "bun run src/index.ts",
+        "build": "bun build src/index.ts --outdir=dist --target=bun --minify --production && cp .env dist/.env"
     },
     "dependencies": {
         "gramio": "^0.9.0",
