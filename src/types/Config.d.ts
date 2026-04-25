@@ -1,6 +1,7 @@
 export type Config = {
-    siteUrl: string;
+    requestUrl: string;
     requestCooldown: number;
     selector: string;
     botToken: string;
+    hostUrl?: string;
 };

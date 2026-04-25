@@ -13,7 +13,7 @@ export default async (config: Config) => {
         await page.setViewport({ width: 1000, height: 2000, deviceScaleFactor: 1 });
 
         try {
-            await page.goto(config.siteUrl, { waitUntil: 'networkidle2' });
+            await page.goto(config.requestUrl, { waitUntil: 'networkidle2' });
             await page.waitForSelector(config.selector, { timeout: 10000, visible: true });
             await new Promise((res) => setTimeout(res, 2000)); // ожидание анимации и т.п.
 
