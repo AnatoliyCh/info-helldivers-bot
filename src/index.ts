@@ -5,6 +5,7 @@ const signals = ['SIGINT', 'SIGTERM'] as const;
 
 const config = useConfig();
 const bot = await useTelegramBot(config);
+
 for (const signal of signals) {
     process.on(signal, async () => {
         console.log(`${signal} => exiting...`);
@@ -13,4 +14,4 @@ for (const signal of signals) {
     });
 }
 
-await bot.start();
+bot.start({ dropPendingUpdates: true, deleteWebhook: 'on-conflict-with-polling' });
