@@ -3,12 +3,11 @@ import type { Config } from '../features/use-config';
 import addMainOrder from './commands/add-main-order';
 import addTips from './commands/add-tips';
 
-export default (config: Config) => {
+export default async (config: Config) => {
     const bot = new Bot(config.botToken).onStart(() => console.log('bot started'));
 
-    addTips(bot);
-    addMainOrder(config, bot);
+    await addTips(bot);
+    await addMainOrder(bot, config);
 
-    bot.start();
     return bot;
 };

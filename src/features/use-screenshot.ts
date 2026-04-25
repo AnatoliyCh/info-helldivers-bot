@@ -24,7 +24,7 @@ export default async (config: Config) => {
             const screenshot = await (isSingleBlock ? await element.$(':scope > *') : element)!.screenshot();
             return screenshot;
         } catch (e) {
-            console.error('Error taking screenshot:', e);
+            console.error('error screenshot');
             throw e;
         } finally {
             await page.close();
