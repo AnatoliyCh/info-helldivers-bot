@@ -13,9 +13,9 @@ export default async (config: Config) => {
         await page.setViewport({ width: 1000, height: 2000, deviceScaleFactor: 1 });
 
         try {
-            await page.goto(config.requestUrl, { waitUntil: 'networkidle2' });
-            await page.waitForSelector(config.selector, { timeout: 10000, visible: true });
-            await new Promise((res) => setTimeout(res, 2000)); // ожидание анимации и т.п.
+            await page.goto(config.requestUrl, { waitUntil: 'domcontentloaded', timeout: 60000 });
+            await page.waitForSelector(config.selector, { timeout: 60000, visible: true });
+            await Bun.sleep(2000); // ожидание анимации и т.п.
 
             const element = await page.$(config.selector);
             if (!element) throw new Error('Element not found');

@@ -1,3 +1,4 @@
+import { webhookHandler } from 'gramio';
 import useTelegramBot from './bot/use-telegram-bot';
 import useConfig from './features/use-config';
 
@@ -5,7 +6,14 @@ const signals = ['SIGINT', 'SIGTERM'] as const;
 
 const config = useConfig();
 const bot = await useTelegramBot(config);
-const server = config.hostUrl ? Bun.serve({ port: 3000, routes: { '/ihb': () => new Response('Bun!') } }) : null;
+const server = config.hostUrl
+    ? Bun.serve({
+          port: 88,
+          routes: { '/ihb': { GET: () => new Response('Bun! 88'), POST: webhookHandler(bot, 'Bun.serve') } },
+      })
+    : null;
+
+server && console.log(`listening on ${server.url} | webhook: ${config.hostUrl}`);
 
 bot.start({
     dropPendingUpdates: true,

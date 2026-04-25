@@ -1,5 +1,5 @@
 {
     "prettier.singleQuote": true,
-    "cSpell.words": ["cooldown", "gramio", "networkidle"],
+    "cSpell.words": ["cooldown", "domcontentloaded", "gramio", "networkidle"],
     "prettier.printWidth": 120
 }
