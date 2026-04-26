@@ -11,7 +11,7 @@ export default async (config: Config) => {
     const state: BotState = { lastRequest: 0 };
     const withState = new Composer({ name: 'state' })
         .decorate({ state })
-        .guard((ctx) => !isCooldown(ctx.state.lastRequest, config.requestCooldown))
+        .guard((ctx) => !config.requestCooldown || !isCooldown(ctx.state.lastRequest, config.requestCooldown))
         .as('scoped');
 
     const bot = new Bot(config.botToken).onStart(() => console.log('bot started')).extend(withState);
@@ -33,12 +33,13 @@ export default async (config: Config) => {
             .extend(withState)
             .command(commands.mainOrder, async (ctx) => {
                 ctx.state.lastRequest = Date.now();
-                await ctx.sendMedia({
+                const context = (await ctx.send('обрабатываю запрос...').catch(() => null)) || ctx;
+                await context.sendMedia({
                     type: 'photo',
                     photo: MediaUpload.buffer(await screenshot.get()),
                     caption: tips.getTipsAsQuote(),
                 });
-                ctx.delete();
+                context.delete().catch(() => null);
             });
 
         bot.extend(composer).onStop(async () => await screenshot.close());
