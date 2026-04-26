@@ -35,14 +35,13 @@ export default async () => {
             .extend(withState)
             .command(commands.mainOrder, async (ctx) => {
                 ctx.state.lastRequest = Date.now();
-
-                const context = (await ctx.send('обрабатываю запрос...').catch(() => null)) || ctx;
-                await context.sendMedia({
+                const pendingMessage = await ctx.send('обрабатываю данные...').catch(() => null);
+                await ctx.sendMedia({
                     type: 'photo',
                     photo: MediaUpload.buffer(await screenshot.get()),
                     caption: tips.getTipsAsQuote(),
                 });
-                context.delete().catch(() => null);
+                await Promise.all([pendingMessage?.delete().catch(() => null), ctx.delete().catch(() => null)]);
             });
 
         bot.extend(composer).onStop(async () => await screenshot.close());
