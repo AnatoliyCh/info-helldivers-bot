@@ -1,6 +1,7 @@
 import { webhookHandler } from 'gramio';
 import useTelegramBot from './bot/use-telegram-bot';
 import useConfig from './features/use-config';
+import logger from './features/use-logger';
 
 const signals = ['SIGINT', 'SIGTERM'] as const;
 
@@ -13,7 +14,7 @@ const server = config.hostUrl
       })
     : null;
 
-server && console.log(`listening on ${server.url} | webhook: ${config.hostUrl}`);
+server && logger.log(`listening on ${server.url} | webhook: ${config.hostUrl}`);
 
 bot.start({
     dropPendingUpdates: true,
@@ -23,7 +24,7 @@ bot.start({
 
 for (const signal of signals) {
     process.on(signal, async () => {
-        console.log(`${signal} => exiting...`);
+        logger.log(`${signal} => exiting...`);
         await Promise.all([bot.stop, server?.stop() || Promise.resolve()]);
         process.exit(0);
     });

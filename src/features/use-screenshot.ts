@@ -1,5 +1,6 @@
 import puppeteer from 'puppeteer';
 import type { Config } from '../types';
+import logger from './use-logger';
 
 export default async (config: Config) => {
     const browser = await puppeteer.launch({
@@ -24,7 +25,7 @@ export default async (config: Config) => {
             const screenshot = await (isSingleBlock ? await element.$(':scope > *') : element)!.screenshot();
             return screenshot;
         } catch (e) {
-            console.error('error screenshot');
+            logger.error('error screenshot', e);
             throw e;
         } finally {
             await page.close();

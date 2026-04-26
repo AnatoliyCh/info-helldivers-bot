@@ -1,5 +1,6 @@
 import { Bot, Composer, MediaUpload } from 'gramio';
 import useRandomTips from '../features/random-tips/use-random-tips';
+import logger from '../features/use-logger';
 import useScreenshot from '../features/use-screenshot';
 import type { BotState, Config } from '../types';
 import { constants, isCooldown } from './helpers';
@@ -14,7 +15,7 @@ export default async (config: Config) => {
         .guard((ctx) => !config.requestCooldown || !isCooldown(ctx.state.lastRequest, config.requestCooldown))
         .as('scoped');
 
-    const bot = new Bot(config.botToken).onStart(() => console.log('bot started')).extend(withState);
+    const bot = new Bot(config.botToken).onStart(() => logger.log('bot started')).extend(withState);
 
     const addTips = async () => {
         const composer = new Composer({ name: commands.tips }).extend(withState).command(commands.tips, async (ctx) => {
@@ -24,7 +25,7 @@ export default async (config: Config) => {
         });
 
         bot.extend(composer);
-        console.log(`added command "${commands.tips}"`);
+        logger.addedCommand(commands.tips);
     };
 
     const addMainOrder = async () => {
@@ -33,6 +34,7 @@ export default async (config: Config) => {
             .extend(withState)
             .command(commands.mainOrder, async (ctx) => {
                 ctx.state.lastRequest = Date.now();
+
                 const context = (await ctx.send('обрабатываю запрос...').catch(() => null)) || ctx;
                 await context.sendMedia({
                     type: 'photo',
@@ -43,7 +45,7 @@ export default async (config: Config) => {
             });
 
         bot.extend(composer).onStop(async () => await screenshot.close());
-        console.log(`added command "${commands.mainOrder}"`);
+        logger.addedCommand(commands.mainOrder);
     };
 
     await addTips();
