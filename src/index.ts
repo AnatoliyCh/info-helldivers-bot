@@ -1,12 +1,11 @@
 import { webhookHandler } from 'gramio';
 import useTelegramBot from './bot/use-telegram-bot';
-import useConfig from './features/use-config';
+import config from './features/use-config';
 import logger from './features/use-logger';
 
 const signals = ['SIGINT', 'SIGTERM'] as const;
 
-const config = useConfig();
-const bot = await useTelegramBot(config);
+const bot = await useTelegramBot();
 const server = config.hostUrl
     ? Bun.serve({
           port: 88,

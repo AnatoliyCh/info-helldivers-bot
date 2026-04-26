@@ -1,11 +1,12 @@
 import { Bot, Composer, MediaUpload } from 'gramio';
 import useRandomTips from '../features/random-tips/use-random-tips';
+import config from '../features/use-config';
 import logger from '../features/use-logger';
 import useScreenshot from '../features/use-screenshot';
-import type { BotState, Config } from '../types';
+import type { BotState } from '../types';
 import { constants, isCooldown } from './helpers';
 
-export default async (config: Config) => {
+export default async () => {
     const { commands } = constants;
     const tips = useRandomTips();
 
